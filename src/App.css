@@ -1,0 +1,157 @@
+:root {
+  --primary: #ff8c3a;
+  --primary-dark: #e0721f;
+  --accent: #006d77;
+  --surface: #fffdf8;
+  --border: #ffd9a6;
+  --danger: #d93025;
+  --success: #34a853;
+  --text: #111;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #fff3e0, #ffe7c2);
+  text-align: center;
+  color: var(--text);
+  margin: 0;
+  min-height: 100vh;
+}
+
+.app-title {
+  margin: 24px 0 12px;
+  color: var(--primary-dark);
+  letter-spacing: 0.3px;
+}
+
+.quiz {
+  background: var(--surface);
+  padding: 20px;
+  margin: 50px auto;
+  width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--border);
+}
+
+.answer {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background: var(--primary);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  color: #241500;
+  font-weight: 600;
+}
+
+.answer:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.answer.correct {
+  background: #d4f5d4;
+  border-color: var(--success);
+  color: #0b5d1e;
+}
+
+.answer.wrong {
+  background: #ffd9d9;
+  border-color: var(--danger);
+  color: #7f1d1d;
+}
+
+.feedback {
+  margin: 8px 0 4px;
+  font-weight: bold;
+}
+
+.feedback.good {
+  color: #0b5d1e;
+}
+
+.feedback.bad {
+  color: #d93025;
+}
+
+.question-row h3 {
+  margin: 0 0 8px;
+  color: #111;
+}
+
+.score {
+  margin: 0 0 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.level {
+  margin: 0 0 12px;
+  font-weight: 600;
+  color: #0f3b8f;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: #e6f3f5;
+  cursor: pointer;
+  color: #043d44;
+  font-weight: 600;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.restart-btn {
+  background: #d4f5d4;
+  border-color: var(--success);
+  color: #0b5d1e;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.restart-btn:hover {
+  background: #c3efc3;
+}
+
+.nav-btn.danger {
+  background: #ffe2e2;
+  border-color: var(--danger);
+  color: #7f1d1d;
+}
+
+.quit-btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.cert {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.name-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
