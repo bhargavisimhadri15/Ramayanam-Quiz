@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { quizData } from "./data";
+import { useState, useEffect } from "react";
+import { buildQuizData } from "./data";
 import { t } from "./i18n";
 
 const shuffle = (arr) => {
@@ -12,11 +12,21 @@ const shuffle = (arr) => {
 };
 
 export default function Quiz({ lang = "en" }) {
-  const [sessionQuestions, setSessionQuestions] = useState(() => shuffle(quizData));
+  const [sessionQuestions, setSessionQuestions] = useState(() =>
+    shuffle(buildQuizData(lang))
+  );
   const [answers, setAnswers] = useState(() => []);
   const [index, setIndex] = useState(0);
   const [quit, setQuit] = useState(false);
   const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    setSessionQuestions(shuffle(buildQuizData(lang)));
+    setAnswers([]);
+    setIndex(0);
+    setQuit(false);
+    setUserName("");
+  }, [lang]);
 
   const current = sessionQuestions[index];
   const selected = answers[index]?.selected || "";
@@ -39,8 +49,9 @@ export default function Quiz({ lang = "en" }) {
     setIndex((prev) => {
       const nextIndex = prev + 1;
       if (nextIndex >= sessionQuestions.length) {
-        const random = quizData[Math.floor(Math.random() * quizData.length)];
-        setSessionQuestions((q) => [...q, random]);
+        const rand = buildQuizData(lang);
+        const randomQuestion = rand[Math.floor(Math.random() * rand.length)];
+        setSessionQuestions((q) => [...q, randomQuestion]);
       }
       return nextIndex;
     });
@@ -51,7 +62,7 @@ export default function Quiz({ lang = "en" }) {
   const quitQuiz = () => setQuit(true);
 
   const restartQuiz = () => {
-    setSessionQuestions(shuffle(quizData));
+    setSessionQuestions(shuffle(buildQuizData(lang)));
     setAnswers([]);
     setIndex(0);
     setQuit(false);
