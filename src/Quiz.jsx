@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { buildQuizData } from "./data";
-import { t } from "./i18n";
+import { useState } from "react";
+import { quizData } from "./data";
 
 const shuffle = (arr) => {
   const a = [...arr];
@@ -11,22 +10,12 @@ const shuffle = (arr) => {
   return a;
 };
 
-export default function Quiz({ lang = "en" }) {
-  const [sessionQuestions, setSessionQuestions] = useState(() =>
-    shuffle(buildQuizData(lang))
-  );
+export default function Quiz() {
+  const [sessionQuestions, setSessionQuestions] = useState(() => shuffle(quizData));
   const [answers, setAnswers] = useState(() => []);
   const [index, setIndex] = useState(0);
   const [quit, setQuit] = useState(false);
   const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    setSessionQuestions(shuffle(buildQuizData(lang)));
-    setAnswers([]);
-    setIndex(0);
-    setQuit(false);
-    setUserName("");
-  }, [lang]);
 
   const current = sessionQuestions[index];
   const selected = answers[index]?.selected || "";
@@ -49,8 +38,7 @@ export default function Quiz({ lang = "en" }) {
     setIndex((prev) => {
       const nextIndex = prev + 1;
       if (nextIndex >= sessionQuestions.length) {
-        const rand = buildQuizData(lang);
-        const randomQuestion = rand[Math.floor(Math.random() * rand.length)];
+        const randomQuestion = quizData[Math.floor(Math.random() * quizData.length)];
         setSessionQuestions((q) => [...q, randomQuestion]);
       }
       return nextIndex;
@@ -62,7 +50,7 @@ export default function Quiz({ lang = "en" }) {
   const quitQuiz = () => setQuit(true);
 
   const restartQuiz = () => {
-    setSessionQuestions(shuffle(buildQuizData(lang)));
+    setSessionQuestions(shuffle(quizData));
     setAnswers([]);
     setIndex(0);
     setQuit(false);
@@ -90,17 +78,17 @@ export default function Quiz({ lang = "en" }) {
       ctx.fillText(text, (canvas.width - metrics.width) / 2, y);
     };
 
-    drawText(t(lang, "certHeading"), 140, 36, "600");
-    drawText(t(lang, "certSubtitle"), 190, 28, "500");
+    drawText("Certificate of Completion", 140, 36, "600");
+    drawText("Ramayanam Quiz Competition", 190, 28, "500");
     ctx.fillStyle = "#555";
-    drawText(t(lang, "presentedTo"), 250, 20);
+    drawText("Presented to", 250, 20);
     ctx.fillStyle = "#1f1b24";
     drawText(name, 300, 34, "600");
     ctx.fillStyle = "#555";
-    drawText(`${t(lang, "correctAnswers")}: ${score}`, 360, 22, "500");
-    drawText(`${t(lang, "level")}: ${level} (${percent}%)`, 400, 20, "500");
-    drawText(`${t(lang, "date")}: ${new Date().toLocaleDateString()}`, 440, 20, "400");
-    drawText(t(lang, "explore"), 500, 20, "400");
+    drawText(`Correct Answers: ${score}`, 360, 22, "500");
+    drawText(`Level: ${level} (${percent}%)`, 400, 20, "500");
+    drawText(`Date: ${new Date().toLocaleDateString()}`, 440, 20, "400");
+    drawText("Keep exploring the epic of Ramayana!", 500, 20, "400");
 
     const link = document.createElement("a");
     link.download = `${name}-certificate.png`;
@@ -111,23 +99,23 @@ export default function Quiz({ lang = "en" }) {
   if (quit) {
     return (
       <div className="quiz">
-        <h2>{t(lang, "quizEnded")}</h2>
+        <h2>Quiz ended</h2>
         <p className="score">
-          {t(lang, "finalScore")}: {score} {t(lang, "correctAnswers").toLowerCase()} | {t(lang, "level")}: {level} ({percent}%)
+          Final Score: {score} correct | Level: {level} ({percent}%)
         </p>
         <div className="cert">
           <input
             className="name-input"
-            placeholder={t(lang, "namePlaceholder")}
+            placeholder="Your name for certificate"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
           <button className="nav-btn" onClick={downloadCertificate} disabled={!userName.trim()}>
-            {t(lang, "downloadCert")}
+            Download Certificate
           </button>
         </div>
         <button className="nav-btn restart-btn" onClick={restartQuiz}>
-          {t(lang, "restart")}
+          Restart
         </button>
       </div>
     );
@@ -141,11 +129,9 @@ export default function Quiz({ lang = "en" }) {
         </h3>
       </div>
       <p className="score">
-        {t(lang, "score")}: {score} {t(lang, "correctAnswers")}
+        Score: {score} correct
       </p>
-      <p className="level">
-        {t(lang, "level")}: {level} ({percent}%)
-      </p>
+      <p className="level">Level: {level} ({percent}%)</p>
       {feedback && (
         <p className={`feedback ${isCorrect ? "good" : "bad"}`}>{feedback}</p>
       )}
@@ -168,14 +154,14 @@ export default function Quiz({ lang = "en" }) {
       })}
       <div className="nav">
         <button className="nav-btn" onClick={prevQuestion} disabled={index === 0}>
-          {t(lang, "previous")}
+          Previous
         </button>
         <button className="nav-btn" onClick={nextQuestion}>
-          {t(lang, "next")}
+          Next
         </button>
       </div>
       <button className="nav-btn danger quit-btn" onClick={quitQuiz}>
-        {t(lang, "quit")}
+        Quit
       </button>
     </div>
   );

@@ -131,81 +131,12 @@ const rotateOptions = (options, shiftBy) => {
   return [...options.slice(shift), ...options.slice(0, shift)];
 };
 
-export const templatesByLang = {
-  en: templates,
-  hi: {
-    who: [
-      (topic) => `${topic} कौन है?`,
-      (topic) => `${topic} का नाम बताइए।`,
-      (topic) => `रामायण में ${topic} कौन हैं?`,
-      (topic) => `महाकाव्य के अनुसार ${topic} कौन है?`,
-      (topic) => `वाल्मीकि रामायण में ${topic} कौन है?`
-    ],
-    what: [
-      (topic) => `${topic} क्या है?`,
-      (topic) => `रामायण में ${topic} क्या है?`,
-      (topic) => `${topic} की पहचान कीजिए।`,
-      (topic) => `काव्य के अनुसार ${topic} क्या है?`,
-      (topic) => `${topic} का उत्तर बताइए।`
-    ],
-    where: [
-      (topic) => `${topic} कहाँ है?`,
-      (topic) => `रामायण में ${topic} कहाँ है?`,
-      (topic) => `${topic} का स्थान बताइए।`,
-      (topic) => `काव्य के अनुसार ${topic} कहाँ है?`,
-      (topic) => `जहाँ ${topic} है उस स्थान का नाम बताइए।`
-    ],
-    howMany: [
-      (topic) => `${topic} कितने हैं?`,
-      (topic) => `रामायण के अनुसार ${topic} कितने हैं?`,
-      (topic) => `${topic} की संख्या बताइए।`,
-      (topic) => `${topic} की गिनती क्या है?`,
-      (topic) => `${topic} कुल कितने हैं?`
-    ]
-  },
-  te: {
-    who: [
-      (topic) => `${topic} ఎవరు?`,
-      (topic) => `${topic} పేరు చెప్పండి.`,
-      (topic) => `రామాయణంలో ${topic} ఎవరు?`,
-      (topic) => `ఈ కావ్యం ప్రకారం ${topic} ఎవరు?`,
-      (topic) => `వాల్మీకి రామాయణంలో ${topic} ఎవరు?`
-    ],
-    what: [
-      (topic) => `${topic} ఏమిటి?`,
-      (topic) => `రామాయణంలో ${topic} ఏమిటి?`,
-      (topic) => `${topic} ను గుర్తించండి.`,
-      (topic) => `ఈ కావ్యం ప్రకారం ${topic} ఏమిటి?`,
-      (topic) => `${topic} సమాధానం చెప్పండి.`
-    ],
-    where: [
-      (topic) => `${topic} ఎక్కడ ఉంది?`,
-      (topic) => `రామాయణంలో ${topic} ఎక్కడ ఉంది?`,
-      (topic) => `${topic} ఉన్న స్థలాన్ని చెప్పండి.`,
-      (topic) => `కావ్యం ప్రకారం ${topic} ఎక్కడ ఉంది?`,
-      (topic) => `${topic} ఉన్న ప్రాంతం పేరు చెప్పండి.`
-    ],
-    howMany: [
-      (topic) => `${topic} ఎంత మంది?`,
-      (topic) => `రామాయణం ప్రకారం ${topic} ఎంత మంది?`,
-      (topic) => `${topic} సంఖ్య చెప్పండి.`,
-      (topic) => `${topic} గణన ఎంత?`,
-      (topic) => `${topic} మొత్తం ఎంత?`
-    ]
-  }
-};
-
-export const buildQuizData = (lang = "en") => {
-  const templateSet = templatesByLang[lang] || templatesByLang.en;
-  return baseFacts.flatMap(fact => {
-    const templateList = templateSet[fact.type] || templateSet.what;
-    const options = [fact.answer, ...fact.distractors];
-    return templateList.map((build, index) => ({
-      question: build(fact.topic),
-      options: rotateOptions(options, index),
-      answer: fact.answer
-    }));
-  });
-};
-
-export const quizData = buildQuizData("en");
+export const quizData = baseFacts.flatMap(fact => {
+  const templateList = templates[fact.type] || templates.what;
+  const options = [fact.answer, ...fact.distractors];
+  return templateList.map((build, index) => ({
+    question: build(fact.topic),
+    options: rotateOptions(options, index),
+    answer: fact.answer
+  }));
+});
