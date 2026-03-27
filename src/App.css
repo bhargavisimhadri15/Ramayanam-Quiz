@@ -24,6 +24,22 @@ body {
   letter-spacing: 0.3px;
 }
 
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.lang-select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: #e6f3f5;
+  color: #043d44;
+  font-weight: 600;
+}
+
 .quiz {
   background: var(--surface);
   padding: 20px;
