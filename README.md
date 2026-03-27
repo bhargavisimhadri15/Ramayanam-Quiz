@@ -1,16 +1,28 @@
-# React + Vite
+# Ramayanam Quiz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live demo: https://ramayanam-quiz-app.vercel.app
 
-Currently, two official plugins are available:
+An interactive Ramayanam multiple‑choice quiz built with React + Vite. It features hundreds of questions, instant feedback with red/green highlights, infinite play (new random questions keep coming), manual navigation, and a downloadable completion certificate that shows your name, correct answers, and level.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Quick start
+```bash
+npm install
+npm run dev
+# open http://localhost:5173
+```
 
-## React Compiler
+## Features
+- 470 question variants auto-generated from Ramayanam facts
+- Randomized order on each start and on restart
+- Immediate correct/wrong coloring and score/level tracking
+- Previous/Next navigation with infinite stream of questions
+- Name field to download a PNG certificate after finishing
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Build
+```bash
+npm run build
+```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech
+- Vite + React
+- Plain CSS styling
